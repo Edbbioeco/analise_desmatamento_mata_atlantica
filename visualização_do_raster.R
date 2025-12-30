@@ -27,6 +27,10 @@ ggplot() +
 
 des_tif |> terra::res()
 
+## Extensão ----
+
+des_tif |> terra::ext()
+
 ## CRS ----
 
 des_tif |> terra::crs()
