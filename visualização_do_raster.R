@@ -18,8 +18,8 @@ des_tif
 
 ggplot() +
   tidyterra::geom_spatraster(data = des_tif) +
-  scale_fill_viridis_c(option = "turbo",
-                       na.value = NA)
+  scale_fill_viridis_c(na.value = NA) +
+  theme_minimal()
 
 # Carcateristicas do raster ----
 
