@@ -235,8 +235,3 @@ ggplot() +
 
 # Comparação do desmatamento dentro e fora de unidades de conservação
 
-```{r}
-des_tif_rea |> 
-  tidyterra::filter(prodes_mata_atlantica_2024 < 50)
-```
-
