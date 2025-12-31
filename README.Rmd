@@ -9,9 +9,139 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Analise de desmatamento da Mata Atlântica
+
+> Análise geoespacial do desmatamento da Mata Atlântica, segundo dados do [Terrabrasilis](https://terrabrasilis.dpi.inpe.br/downloads/)
+
 # Pacotes 
 
 ```{r}
+library(geobr)
 
+library(tidyverse)
+
+library(magrittr)
+
+library(sf)
+
+library(terra)
+
+library(tidyterra)
 ```
 
+# Dados 
+
+## Shapefile da Mata Atlântica 
+
+### Importando 
+
+```{r}
+ma <- geobr::read_biomes(year = 2019) |> 
+  dplyr::filter(name_biome == "Mata Atlântica")
+```
+
+### Visualizando
+
+```{r}
+ma
+
+ggplot() +
+  geom_sf(data = ma, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
+```
+
+## Shapefile dos estados do Mata Atlântica
+
+### Importando 
+
+```{r}
+estados <- geobr::read_state(year = 2019)
+```
+
+### Visualizando 
+
+```{r}
+estados
+
+ggplot() +
+  geom_sf(data = estados, color = "black", fill = "gray20", alpha = 0.3)
+```
+
+### Tratando 
+
+```{r}
+estados %<>%
+  sf::st_intersection(ma)
+
+estados
+
+ggplot() +
+  geom_sf(data = estados, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
+```
+
+## Shapefile das Unidades de Conservação na Mata Atlântica
+
+### Importando 
+
+```{r}
+uc <- geobr::read_conservation_units()
+```
+
+### Visuslizando
+
+```{r}
+uc
+
+ggplot() +
+  geom_sf(data = uc, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
+```
+
+## Tratando 
+
+```{r}
+uc %<>%
+  sf::st_make_valid() %<>%
+  sf::st_intersection(ma)
+
+uc
+
+ggplot() +
+  geom_sf(data = uc, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
+```
+
+## Raster de desmatamento 
+
+### Importnado 
+
+```{r}
+des_tif <- terra::rast("prodes_mata_atlantica_2024.tif")
+```
+
+### Visualizando
+
+```{r}
+des_tif
+
+ggplot() +
+  tidyterra::geom_spatraster(data = des_tif) +
+  scale_fill_viridis_c(na.value = NA) +
+  geom_sf(data = uc, color = "red", fill = NA) +
+  theme_minimal()
+```
+
+# Reamostrando o raster para 1km²
+
+# Comparação da área de desmatamento por estados
+
+## Área dos estados
+
+```{r}
+area_estados <- estados |> 
+  sf::st_transform(crs = 32725) |> 
+  sf::st_area() / 1e6
+
+area_estados
+```
+
+## Área desmatada
+
+# Comparação do desmatamento dentro e fora de unidades de conservação
