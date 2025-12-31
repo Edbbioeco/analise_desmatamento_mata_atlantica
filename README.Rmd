@@ -130,6 +130,27 @@ ggplot() +
 
 # Reamostrando o raster de desmatamento para 1km²
 
+## Criando o raster
+
+```{r}
+raster_modelo <- rast(res = (30 / 3600), crs = "EPSG:4326")
+
+raster_modelo
+```
+
+## Reamostrando
+
+```{r}
+des_tif
+
+des_tif_rea <- des_tif |> 
+  terra::resample(raster_modelo)
+  
+des_tif_rea
+
+terra::res(des_tif_rea) == terra::res(des_tif)
+```
+
 # Comparação da área de desmatamento por estados
 
 ## Área dos estados
