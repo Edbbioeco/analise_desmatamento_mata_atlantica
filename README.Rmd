@@ -128,7 +128,7 @@ ggplot() +
   theme_minimal()
 ```
 
-# Reamostrando o raster para 1km²
+# Reamostrando o raster de desmatamento para 1km²
 
 # Comparação da área de desmatamento por estados
 
@@ -144,11 +144,6 @@ area_estados
 
 ## Área desmatada
 
-<<<<<<< HEAD
 # Comparação da área de desmatamento por estados
 
 # Comparação do desmatamento dentro e fora de unidades de conservação
-
-=======
-# Comparação da área de desmatamento por estados
->>>>>>> bdec0143c79680123e405cb01bd9ef96f1d3ab54
