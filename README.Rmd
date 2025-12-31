@@ -79,36 +79,6 @@ ggplot() +
   geom_sf(data = estados_ma, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
 ```
 
-## Shapefile das Unidades de Conservação na Mata Atlântica
-
-### Importando 
-
-```{r}
-uc <- geobr::read_conservation_units()
-```
-
-### Visuslizando
-
-```{r}
-uc
-
-ggplot() +
-  geom_sf(data = uc, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
-```
-
-## Tratando 
-
-```{r}
-uc %<>%
-  sf::st_make_valid() %<>%
-  sf::st_intersection(ma)
-
-uc
-
-ggplot() +
-  geom_sf(data = uc, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
-```
-
 ## Raster de desmatamento 
 
 ### Importnado 
@@ -125,7 +95,6 @@ des_tif
 ggplot() +
   tidyterra::geom_spatraster(data = des_tif) +
   scale_fill_viridis_c(na.value = NA) +
-  geom_sf(data = uc, color = "red", fill = NA) +
   theme_minimal()
 ```
 
@@ -217,7 +186,7 @@ estados_area <- estados_ma |>
 estados_area
 ```
 
-## Visualizando 
+## Visualizando os mapas
 
 ```{r}
 ggplot() +
@@ -234,6 +203,4 @@ ggplot() +
   scale_fill_viridis_c(na.value = NA) +
   theme_minimal()
 ```
-
-# Comparação do desmatamento dentro e fora de unidades de conservação
 
