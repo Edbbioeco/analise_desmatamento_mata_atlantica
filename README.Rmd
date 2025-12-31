@@ -12,6 +12,25 @@ knitr::opts_chunk$set(echo = TRUE)
 # Pacotes 
 
 ```{r}
+library(geobr)
 
+library(tidyverse)
+
+library(terra)
+
+library(tidyterra)
 ```
 
+# Dados 
+
+## Shapefile da Mata Atlântica 
+
+## Shapefile dos estados do Brasil 
+
+## Shapefile das Unidades de Conservação na Mata Atlântica
+
+## Raster de desmatamento 
+
+# Comparação da área de desmatamento por estados
+
+# Comparação do desmatamento dentro e fora de unidades de conservação
