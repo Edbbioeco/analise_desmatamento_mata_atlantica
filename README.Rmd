@@ -63,19 +63,20 @@ estados <- geobr::read_state(year = 2019)
 estados
 
 ggplot() +
-  geom_sf(data = estados, color = "black", fill = "gray20", alpha = 0.3)
+  geom_sf(data = estados, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
 ```
 
 ### Tratando 
 
 ```{r}
-estados %<>%
+estados_ma <- estados |> 
   sf::st_intersection(ma)
 
-estados
+estados_ma
 
 ggplot() +
-  geom_sf(data = estados, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
+  geom_sf(data = estados, color = "black") +
+  geom_sf(data = estados_ma, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
 ```
 
 ## Shapefile das Unidades de Conservação na Mata Atlântica
@@ -133,9 +134,9 @@ ggplot() +
 ## Criando o raster
 
 ```{r}
-raster_modelo <- rast(res = (30 / 3600), crs = "EPSG:4326")
-
-terra::ext(raster_modelo) <- terra::ext(des_tif)
+raster_modelo <- rast(res = (30 / 3600), 
+                      crs = "EPSG:4326",
+                      ext = des_tif |> terra::ext())
 
 raster_modelo
 ```
@@ -170,9 +171,10 @@ ggplot() +
 ## Área dos estados
 
 ```{r}
-area_estados <- estados |> 
+area_estados <- estados_ma |> 
   sf::st_transform(crs = 32725) |> 
-  sf::st_area() / 1e6
+  sf::st_area() / 1e6 |> 
+  as.numeric()
 
 area_estados
 ```
@@ -185,8 +187,8 @@ area_raster <- c()
 area_desmatada <- function(id){
   
   raster_recortado <- des_tif_rea |>
-    terra::crop(estados[id, ]) |> 
-    terra::mask(estados[id, ]) |> 
+    terra::crop(estados_ma[id, ]) |> 
+    terra::mask(estados_ma[id, ]) |> 
     tidyterra::filter(prodes_mata_atlantica_2024 < 50)
   
   area <- raster_recortado |> terra::expanse(unit = "km")
@@ -195,7 +197,7 @@ area_desmatada <- function(id){
   
 }
 
-n_estados <- estados |> nrow()
+n_estados <- estados_ma |> nrow()
 
 n_estados
 
@@ -207,7 +209,7 @@ area_raster
 ## Incorporando os dados ao shapefile 
 
 ```{r}
-estados_area <- estados |> 
+estados_area <- estados_ma |> 
   dplyr::mutate(`Área desmatada` = area_raster,
                 `% de área desmatada do estado` = area_raster / area_estados |>
                   as.numeric())
@@ -219,12 +221,14 @@ estados_area
 
 ```{r}
 ggplot() +
+  geom_sf(data = estados, color = "black") +
   geom_sf(data = estados_area, 
           color = "black", aes(fill = `Área desmatada`)) +
   scale_fill_viridis_c(na.value = NA) +
   theme_minimal()
 
 ggplot() +
+  geom_sf(data = estados, color = "black") +
   geom_sf(data = estados_area, 
           color = "black", aes(fill = `% de área desmatada do estado`)) +
   scale_fill_viridis_c(na.value = NA) +
