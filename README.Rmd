@@ -135,6 +135,8 @@ ggplot() +
 ```{r}
 raster_modelo <- rast(res = (30 / 3600), crs = "EPSG:4326")
 
+terra::ext(raster_modelo) <- terra::ext(des_tif)
+
 raster_modelo
 ```
 
@@ -151,6 +153,18 @@ des_tif_rea
 terra::res(des_tif_rea) == terra::res(des_tif)
 ```
 
+## Visualizando o raster reamostrado
+
+```{r}
+des_tif_rea
+
+ggplot() +
+  tidyterra::geom_spatraster(data = des_tif_rea) +
+  scale_fill_viridis_c(na.value = NA) +
+  geom_sf(data = uc, color = "red", fill = NA) +
+  theme_minimal()
+```
+
 # Comparação da área de desmatamento por estados
 
 ## Área dos estados
@@ -165,6 +179,64 @@ area_estados
 
 ## Área desmatada
 
+```{r}
+area_raster <- c()
+
+area_desmatada <- function(id){
+  
+  raster_recortado <- des_tif_rea |>
+    terra::crop(estados[id, ]) |> 
+    terra::mask(estados[id, ]) |> 
+    tidyterra::filter(prodes_mata_atlantica_2024 < 50)
+  
+  area <- raster_recortado |> terra::expanse(unit = "km")
+  
+  area_raster <<- c(area_raster, area[1, 2]) 
+  
+}
+
+n_estados <- estados |> nrow()
+
+n_estados
+
+purrr::walk(1:n_estados, area_desmatada)
+
+area_raster
+```
+
+## Incorporando os dados ao shapefile 
+
+```{r}
+estados_area <- estados |> 
+  dplyr::mutate(`Área desmatada` = area_raster,
+                `% de área desmatada do estado` = area_raster / area_estados |>
+                  as.numeric())
+
+estados_area
+```
+
+## Visualizando 
+
+```{r}
+ggplot() +
+  geom_sf(data = estados_area, 
+          color = "black", aes(fill = `Área desmatada`)) +
+  scale_fill_viridis_c(na.value = NA) +
+  theme_minimal()
+
+ggplot() +
+  geom_sf(data = estados_area, 
+          color = "black", aes(fill = `% de área desmatada do estado`)) +
+  scale_fill_viridis_c(na.value = NA) +
+  theme_minimal()
+```
+
 # Comparação da área de desmatamento por estados
 
 # Comparação do desmatamento dentro e fora de unidades de conservação
+
+```{r}
+des_tif_rea |> 
+  tidyterra::filter(prodes_mata_atlantica_2024 < 50)
+```
+
