@@ -144,4 +144,4 @@ area_estados
 
 ## Área desmatada
 
-# Comparação do desmatamento dentro e fora de unidades de conservação
+# Comparação da área de desmatamento por estados
