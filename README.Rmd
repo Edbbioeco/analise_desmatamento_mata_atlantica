@@ -193,14 +193,28 @@ ggplot() +
   geom_sf(data = estados, color = "black") +
   geom_sf(data = estados_area, 
           color = "black", aes(fill = `Área desmatada`)) +
-  scale_fill_viridis_c(na.value = NA) +
-  theme_minimal()
+  scale_fill_viridis_c(na.value = NA,
+                       guide = guide_colourbar(title.position = "top",
+                                               title.hjust = 0.5,
+                                               barwidth = 20,
+                                               barheight = 0.75,
+                                               frame.colour = "black",
+                                               ticks.colour = "black")) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
 
 ggplot() +
   geom_sf(data = estados, color = "black") +
   geom_sf(data = estados_area, 
           color = "black", aes(fill = `% de área desmatada do estado`)) +
-  scale_fill_viridis_c(na.value = NA) +
-  theme_minimal()
+  scale_fill_viridis_c(na.value = NA,
+                       guide = guide_colourbar(title.position = "top",
+                                               title.hjust = 0.5,
+                                               barwidth = 20,
+                                               barheight = 0.75,
+                                               frame.colour = "black",
+                                               ticks.colour = "black")) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
 ```
 
