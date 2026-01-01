@@ -51,7 +51,7 @@ ggplot() +
   geom_sf(data = ma, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-73-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 ## Shapefile dos estados do Mata Atlântica
 
@@ -103,7 +103,7 @@ ggplot() +
   geom_sf(data = estados, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-75-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 ### Tratando
 
@@ -154,242 +154,7 @@ ggplot() +
   geom_sf(data = estados_ma, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-76-1.png)<!-- -->
-
-## Shapefile das Unidades de Conservação na Mata Atlântica
-
-### Importando
-
-``` r
-uc <- geobr::read_conservation_units()
-```
-
-    ## Using year/date 201909
-
-### Visuslizando
-
-``` r
-uc
-```
-
-    ## Simple feature collection with 1934 features and 14 fields
-    ## Geometry type: MULTIPOLYGON
-    ## Dimension:     XY
-    ## Bounding box:  xmin: -73.99068 ymin: -32.92342 xmax: -25.2909 ymax: 5.272257
-    ## Geodetic CRS:  SIRGAS 2000
-    ## First 10 features:
-    ##    code_conservation_unit
-    ## 1                    2350
-    ## 2                    3787
-    ## 3                    3445
-    ## 4                     145
-    ## 5                    1754
-    ## 6                    2092
-    ## 7                    3178
-    ## 8                     821
-    ## 9                    1879
-    ## 10                   3471
-    ##                                             name_conservation_unit id_wcm
-    ## 1       RESERVA PARTICULAR DO PATRIMÔNIO NATURAL BUGIO E COMPANHIA   <NA>
-    ## 2      AREA DE PROTECAO AMBIENTAL DA BACIA DO CORREGO CAPAO GRANDE   <NA>
-    ## 3                   RESERVA PARTICULAR DO PATRIMÔNIO NATURAL PILAR   <NA>
-    ## 4                             PARQUE NACIONAL DA SERRA DA CAPIVARA     64
-    ## 5                                    FLORESTA ESTADUAL DO ARAGUAIA   <NA>
-    ## 6  RESERVA PARTICULAR DO PATRIMÔNIO NATURAL DA CABECEIRA DO CAFÔFO   <NA>
-    ## 7                                 PARQUE DISTRITAL SALTO DO TORORÓ   <NA>
-    ## 8                                        ESTAÇÃO ECOLÓGICA ITABERÁ  81049
-    ## 9                             ÀREA DE PROTEÇÃO AMBIENTAL DE TINGUÁ   <NA>
-    ## 10             ÁREA DE RELEVANTE INTERESSE ECOLóGICO DO CITRóPOLIS   <NA>
-    ##                                    category group government_level creation_year
-    ## 1  Reserva Particular do Patrimônio Natural    US         estadual          2010
-    ## 2                Área de Proteção Ambiental    US        municipal          2018
-    ## 3  Reserva Particular do Patrimônio Natural    US         estadual          2013
-    ## 4                                    Parque    PI          federal          1979
-    ## 5                                  Floresta    US         estadual          2002
-    ## 6  Reserva Particular do Patrimônio Natural    US          federal          2007
-    ## 7                                    Parque    PI         estadual          2015
-    ## 8                         Estação Ecológica    PI         estadual          1957
-    ## 9                Área de Proteção Ambiental    US        municipal          2004
-    ## 10    Área de Relevante Interesse Ecológico    US        municipal          2016
-    ##     gid7
-    ## 1   6101
-    ## 2  15289
-    ## 3  13500
-    ## 4   6506
-    ## 5   2983
-    ## 6   9436
-    ## 7  11660
-    ## 8   2909
-    ## 9   3619
-    ## 10 13135
-    ##                                                                             quality
-    ## 1         Aproximado (O poligono representa uma estimativa dos limites da unidade).
-    ## 2  Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 3  Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 4         Aproximado (O poligono representa uma estimativa dos limites da unidade).
-    ## 5  Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 6  Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 7  Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 8         Aproximado (O poligono representa uma estimativa dos limites da unidade).
-    ## 9  Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 10 Esquemático (O poligono é uma representação esquemática da dimensão da unidade).
-    ##                               legislation dt_ultim10    code_u111
-    ## 1            Outros nº 74-S de 22/02/2010 31/08/2012 0000.32.2350
-    ## 2       Decreto nº 051/2018 de 20/09/2018 20/09/2018 1480.52.3787
-    ## 3           Portaria nº 466 de 27/06/2013 10/07/2017 0000.33.3445
-    ## 4          Decreto nº 83548 de 05/06/1979 27/09/2007 0000.00.0145
-    ## 5          Decreto nº 5.630 de 07/08/2002 06/08/2009 0000.52.1754
-    ## 6            Portaria nº 25 de 11/12/2007 26/08/2011 0000.00.2092
-    ## 7          Decreto nº 36472 de 04/05/2015 04/07/2019 0000.53.3178
-    ## 8          Decreto nº 29881 de 12/10/1957 13/09/2019 0000.35.0821
-    ## 9  Lei complementar nº 3587 de 09/07/2004 15/08/2019 0350.33.1879
-    ## 10         Decreto nº 2.587 de 07/10/2016 27/03/2017 0227.33.3471
-    ##                                                                                              name_organization
-    ## 1                                    Instituto Estadual de Meio Ambiente e Recursos Hídricos do Espírito Santo
-    ## 2                                                    Secretaria Municipal de Meio Ambiente de Nova Aurora - GO
-    ## 3                                                             Instituto Estadual do Ambiente do Rio de Janeiro
-    ## 4                                                      Instituto Chico Mendes de Conservação da Biodiversidade
-    ## 5                                        Secretaria Estadual do Meio Ambiente e dos Recursos Hídricos de Goiás
-    ## 6                                                      Instituto Chico Mendes de Conservação da Biodiversidade
-    ## 7             Instituto do Meio Ambiente e dos Recursos Hídricos do Distrito Federal - Brasília Ambiental - DF
-    ## 8                                      Fundação para Conservação e a Produção Florestal do Estado de São Paulo
-    ## 9  Secretaria Municipal de Meio Ambiente, Agricultura, Desenvolvimento Econômico e Turismo de Nova Iguaçu - RJ
-    ## 10                               Secretaria Municipal do Ambiente e Desenvolvimento Sustentável de Japeri - RJ
-    ##      date                           geom
-    ## 1  201909 MULTIPOLYGON (((-40.96875 -...
-    ## 2  201909 MULTIPOLYGON (((-48.25389 -...
-    ## 3  201909 MULTIPOLYGON (((-42.79637 -...
-    ## 4  201909 MULTIPOLYGON (((-42.57484 -...
-    ## 5  201909 MULTIPOLYGON (((-50.58059 -...
-    ## 6  201909 MULTIPOLYGON (((-42.02135 -...
-    ## 7  201909 MULTIPOLYGON (((-47.8319 -1...
-    ## 8  201909 MULTIPOLYGON (((-49.13593 -...
-    ## 9  201909 MULTIPOLYGON (((-43.38872 -...
-    ## 10 201909 MULTIPOLYGON (((-43.6024 -2...
-
-``` r
-ggplot() +
-  geom_sf(data = uc, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
-```
-
-![](README_files/figure-gfm/unnamed-chunk-78-1.png)<!-- -->
-
-## Tratando
-
-``` r
-uc %<>%
-  sf::st_make_valid() %<>%
-  sf::st_intersection(ma)
-```
-
-    ## Warning: attribute variables are assumed to be spatially constant throughout all
-    ## geometries
-
-``` r
-uc
-```
-
-    ## Simple feature collection with 1161 features and 17 fields
-    ## Geometry type: GEOMETRY
-    ## Dimension:     XY
-    ## Bounding box:  xmin: -54.79835 ymin: -29.92864 xmax: -28.84785 ymax: 0.9178799
-    ## Geodetic CRS:  SIRGAS 2000
-    ## First 10 features:
-    ##    code_conservation_unit
-    ## 1                    2350
-    ## 3                    3445
-    ## 6                    2092
-    ## 8                     821
-    ## 9                    1879
-    ## 10                   3471
-    ## 12                   1965
-    ## 14                     73
-    ## 17                   1686
-    ## 18                   1766
-    ##                                             name_conservation_unit id_wcm
-    ## 1       RESERVA PARTICULAR DO PATRIMÔNIO NATURAL BUGIO E COMPANHIA   <NA>
-    ## 3                   RESERVA PARTICULAR DO PATRIMÔNIO NATURAL PILAR   <NA>
-    ## 6  RESERVA PARTICULAR DO PATRIMÔNIO NATURAL DA CABECEIRA DO CAFÔFO   <NA>
-    ## 8                                        ESTAÇÃO ECOLÓGICA ITABERÁ  81049
-    ## 9                             ÀREA DE PROTEÇÃO AMBIENTAL DE TINGUÁ   <NA>
-    ## 10             ÁREA DE RELEVANTE INTERESSE ECOLóGICO DO CITRóPOLIS   <NA>
-    ## 12                                   PARQUE ESTADUAL DE ITAPETINGA   <NA>
-    ## 14                               ESTAÇÃO ECOLÓGICA MICO LEÃO PRETO 351728
-    ## 17                                    RESERVA EXTRATIVISTA TAQUARI   <NA>
-    ## 18                                        APA DO MORRO DO SILVéRIO   <NA>
-    ##                                    category group government_level creation_year
-    ## 1  Reserva Particular do Patrimônio Natural    US         estadual          2010
-    ## 3  Reserva Particular do Patrimônio Natural    US         estadual          2013
-    ## 6  Reserva Particular do Patrimônio Natural    US          federal          2007
-    ## 8                         Estação Ecológica    PI         estadual          1957
-    ## 9                Área de Proteção Ambiental    US        municipal          2004
-    ## 10    Área de Relevante Interesse Ecológico    US        municipal          2016
-    ## 12                                   Parque    PI         estadual          2010
-    ## 14                        Estação Ecológica    PI          federal          2002
-    ## 17                     Reserva Extrativista    US         estadual          2008
-    ## 18               Área de Proteção Ambiental    US        municipal          1999
-    ##     gid7
-    ## 1   6101
-    ## 3  13500
-    ## 6   9436
-    ## 8   2909
-    ## 9   3619
-    ## 10 13135
-    ## 12  4479
-    ## 14  5262
-    ## 17  4589
-    ## 18  4331
-    ##                                                                             quality
-    ## 1         Aproximado (O poligono representa uma estimativa dos limites da unidade).
-    ## 3  Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 6  Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 8         Aproximado (O poligono representa uma estimativa dos limites da unidade).
-    ## 9  Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 10 Esquemático (O poligono é uma representação esquemática da dimensão da unidade).
-    ## 12 Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 14 Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ## 17        Aproximado (O poligono representa uma estimativa dos limites da unidade).
-    ## 18 Correto (O poligono corresponde ao memorial descritivo do ato legal de criação).
-    ##                               legislation dt_ultim10    code_u111
-    ## 1            Outros nº 74-S de 22/02/2010 31/08/2012 0000.32.2350
-    ## 3           Portaria nº 466 de 27/06/2013 10/07/2017 0000.33.3445
-    ## 6            Portaria nº 25 de 11/12/2007 26/08/2011 0000.00.2092
-    ## 8          Decreto nº 29881 de 12/10/1957 13/09/2019 0000.35.0821
-    ## 9  Lei complementar nº 3587 de 09/07/2004 15/08/2019 0350.33.1879
-    ## 10         Decreto nº 2.587 de 07/10/2016 27/03/2017 0227.33.3471
-    ## 12        Decreto nº 55.662 de 31/12/2010 10/01/2019 0000.35.1965
-    ## 14           Decreto nº S/N de 17/07/2002 27/04/2011 0000.00.0073
-    ## 17   Lei ordinária nº 12810 de 21/02/2008 30/09/2015 0000.35.1686
-    ## 18    Lei ordinária nº 2836 de 14/07/1999 15/03/2011 0455.33.1766
-    ##                                                                                              name_organization
-    ## 1                                    Instituto Estadual de Meio Ambiente e Recursos Hídricos do Espírito Santo
-    ## 3                                                             Instituto Estadual do Ambiente do Rio de Janeiro
-    ## 6                                                      Instituto Chico Mendes de Conservação da Biodiversidade
-    ## 8                                      Fundação para Conservação e a Produção Florestal do Estado de São Paulo
-    ## 9  Secretaria Municipal de Meio Ambiente, Agricultura, Desenvolvimento Econômico e Turismo de Nova Iguaçu - RJ
-    ## 10                               Secretaria Municipal do Ambiente e Desenvolvimento Sustentável de Japeri - RJ
-    ## 12                                     Fundação para Conservação e a Produção Florestal do Estado de São Paulo
-    ## 14                                                     Instituto Chico Mendes de Conservação da Biodiversidade
-    ## 17                                     Fundação para Conservação e a Produção Florestal do Estado de São Paulo
-    ## 18                                  Secretaria Municipal de Conservação e Meio Ambiente do Rio de Janeiro - RJ
-    ##      date     name_biome code_biome year                           geom
-    ## 1  201909 Mata Atlântica          4 2019 POLYGON ((-40.9703 -20.0617...
-    ## 3  201909 Mata Atlântica          4 2019 MULTIPOLYGON (((-42.80029 -...
-    ## 6  201909 Mata Atlântica          4 2019 POLYGON ((-42.01531 -22.113...
-    ## 8  201909 Mata Atlântica          4 2019 POLYGON ((-49.13893 -23.836...
-    ## 9  201909 Mata Atlântica          4 2019 POLYGON ((-43.39249 -22.571...
-    ## 10 201909 Mata Atlântica          4 2019 POLYGON ((-43.60316 -22.682...
-    ## 12 201909 Mata Atlântica          4 2019 POLYGON ((-46.46684 -23.188...
-    ## 14 201909 Mata Atlântica          4 2019 MULTIPOLYGON (((-52.47203 -...
-    ## 17 201909 Mata Atlântica          4 2019 POLYGON ((-48.0226 -25.0839...
-    ## 18 201909 Mata Atlântica          4 2019 POLYGON ((-43.63734 -22.990...
-
-``` r
-ggplot() +
-  geom_sf(data = uc, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
-```
-
-![](README_files/figure-gfm/unnamed-chunk-79-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ## Raster de desmatamento
 
@@ -417,13 +182,12 @@ des_tif
 ggplot() +
   tidyterra::geom_spatraster(data = des_tif) +
   scale_fill_viridis_c(na.value = NA) +
-  geom_sf(data = uc, color = "red", fill = NA) +
   theme_minimal()
 ```
 
     ## <SpatRaster> resampled to 500420 cells.
 
-![](README_files/figure-gfm/unnamed-chunk-81-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 # Reamostrando o raster de desmatamento para 1km²
 
@@ -506,7 +270,7 @@ ggplot() +
 
     ## <SpatRaster> resampled to 500420 cells.
 
-![](README_files/figure-gfm/unnamed-chunk-84-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 # Comparação da área de desmatamento por estados
 
@@ -612,7 +376,7 @@ estados_area
     ## 19                     0.7059821
     ## 20                     0.7969121
 
-## Visualizando
+## Visualizando os mapas
 
 ``` r
 ggplot() +
@@ -623,7 +387,7 @@ ggplot() +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-88-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 ``` r
 ggplot() +
@@ -634,6 +398,4 @@ ggplot() +
   theme_minimal()
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-88-2.png)<!-- -->
-
-# Comparação do desmatamento dentro e fora de unidades de conservação
+![](README_files/figure-gfm/unnamed-chunk-19-2.png)<!-- -->
