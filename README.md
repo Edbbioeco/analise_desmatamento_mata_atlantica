@@ -51,7 +51,7 @@ ggplot() +
   geom_sf(data = ma, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ## Shapefile dos estados do Mata Atlântica
 
@@ -103,7 +103,7 @@ ggplot() +
   geom_sf(data = estados, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 ### Tratando
 
@@ -154,7 +154,7 @@ ggplot() +
   geom_sf(data = estados_ma, color = "darkgreen", fill = "forestgreen", alpha = 0.3)
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
 ## Raster de desmatamento
 
@@ -187,7 +187,7 @@ ggplot() +
 
     ## <SpatRaster> resampled to 500420 cells.
 
-![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 # Reamostrando o raster de desmatamento para 1km²
 
@@ -270,7 +270,7 @@ ggplot() +
 
     ## <SpatRaster> resampled to 500420 cells.
 
-![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
 
 # Comparação da área de desmatamento por estados
 
@@ -383,19 +383,33 @@ ggplot() +
   geom_sf(data = estados, color = "black") +
   geom_sf(data = estados_area, 
           color = "black", aes(fill = `Área desmatada`)) +
-  scale_fill_viridis_c(na.value = NA) +
-  theme_minimal()
+  scale_fill_viridis_c(na.value = NA,
+                       guide = guide_colourbar(title.position = "top",
+                                               title.hjust = 0.5,
+                                               barwidth = 20,
+                                               barheight = 0.75,
+                                               frame.colour = "black",
+                                               ticks.colour = "black")) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-24-1.png)<!-- -->
 
 ``` r
 ggplot() +
   geom_sf(data = estados, color = "black") +
   geom_sf(data = estados_area, 
           color = "black", aes(fill = `% de área desmatada do estado`)) +
-  scale_fill_viridis_c(na.value = NA) +
-  theme_minimal()
+  scale_fill_viridis_c(na.value = NA,
+                       guide = guide_colourbar(title.position = "top",
+                                               title.hjust = 0.5,
+                                               barwidth = 20,
+                                               barheight = 0.75,
+                                               frame.colour = "black",
+                                               ticks.colour = "black")) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-19-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-24-2.png)<!-- -->
